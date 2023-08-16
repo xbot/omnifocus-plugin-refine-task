@@ -1,0 +1,49 @@
+/*{
+    "type": "action",
+    "targets": ["omnifocus"],
+    "author": "Donie",
+    "identifier": "org.0x3f.flip_task",
+    "version": "1.0",
+    "description": "Append the task name to note and let the user write a new one.",
+    "label": "Flip the selected task",
+    "shortLabel": "Flip the selected task",
+    "paletteLabel": "Flip the selected task",
+    "image": "arrow.up.and.down.righttriangle.up.righttriangle.down"
+}*/
+(() => {
+    const FIELD_NAME = 'Name';
+
+    var action = new PlugIn.Action(function (selection, sender) {
+        try {
+            const selectedTask = selection.tasks[0];
+
+            const newNameInput = new Form.Field.String(
+                FIELD_NAME,
+                "Name"
+            );
+
+            const form = new Form();
+
+            form.addField(newNameInput);
+
+            form.validate = function (formObject) { return true; };
+
+            const formPromise = form.show('Flip the task', 'Flip');
+
+            formPromise.then((formObject) => {
+                const newName = formObject.values[FIELD_NAME];
+
+                selectedTask.note = selectedTask.name + "\n\n" + selectedTask.note;
+                selectedTask.name = newName;
+            });
+        } catch (err) {
+            new Alert(err.name, err.message).show();
+        }
+    });
+
+    action.validate = function (selection, sender) {
+        return selection.tasks.length == 1;
+    };
+
+    return action;
+})();
