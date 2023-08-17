@@ -2,12 +2,12 @@
     "type": "action",
     "targets": ["omnifocus"],
     "author": "Donie",
-    "identifier": "org.0x3f.flip_task",
+    "identifier": "org.0x3f.refine_task",
     "version": "1.0",
     "description": "Append the task name to note and let the user write a new one.",
-    "label": "Flip the selected task",
-    "shortLabel": "Flip the selected task",
-    "paletteLabel": "Flip the selected task",
+    "label": "Refine the selected task",
+    "shortLabel": "Refine the selected task",
+    "paletteLabel": "Refine the selected task",
     "image": "arrow.up.and.down.righttriangle.up.righttriangle.down"
 }*/
 (() => {
@@ -28,7 +28,7 @@
 
             form.validate = function (formObject) { return true; };
 
-            const formPromise = form.show('Flip the task', 'Flip');
+            const formPromise = form.show('Refine the task', 'Refine');
 
             formPromise.then((formObject) => {
                 const newName = formObject.values[FIELD_NAME];
